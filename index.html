@@ -83,6 +83,38 @@ a{text-decoration:none;color:inherit}
 .pbtn.on-read{background:var(--green-light);color:var(--green);border-color:var(--green-light)}
 .pbtn.on-fav{background:#fdf3e3;color:var(--gold);border-color:#f0e0c0}
 .pbtn.on-meh{color:#bbb}
+/* 年度复盘 */
+.annual{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:20px}
+.y-head{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.y-head .yk{font-size:11px;letter-spacing:2px;color:var(--green2);font-weight:600;width:100%}
+.y-head h2{font-size:20px;font-weight:800;color:var(--green-deep)}
+.y-head .yw{font-size:12px;color:var(--sub);margin-bottom:3px}
+.y-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:18px}
+.y-stat{background:var(--bg);border-radius:12px;padding:13px 15px}
+.y-stat .n{font-size:23px;font-weight:800;color:var(--green);line-height:1.2}
+.y-stat .n small{font-size:12px;font-weight:600;color:var(--sub)}
+.y-stat .l{font-size:12px;color:var(--sub);margin-top:2px}
+.heat-scroll{overflow-x:auto;margin-top:20px;padding-bottom:4px}
+.heat-inner{display:inline-block;min-width:100%}
+.heat-months,.heatmap{display:grid;grid-template-rows:auto;grid-auto-flow:column;gap:3px}
+.heat-months{grid-template-rows:16px;margin-bottom:4px}
+.heat-months span{font-size:10px;color:var(--sub);white-space:nowrap;grid-row:1}
+.heatmap{grid-template-rows:repeat(7,13px)}
+.hcell{width:13px;height:13px;border-radius:3px;background:#e9eeeb}
+.hcell.l1{background:#cfe0d8}.hcell.l2{background:#9cc4b2}.hcell.l3{background:#5ea387}.hcell.l4{background:#177a5f}
+.heat-legend{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--sub);margin-top:8px;justify-content:flex-end}
+.heat-legend .hcell{width:11px;height:11px}
+.y-bottom{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:22px}
+.yb-title{font-size:13px;font-weight:700;color:var(--green-deep);margin-bottom:12px}
+.mbar{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--sub);margin-bottom:7px}
+.mbar .ml{width:52px;flex-shrink:0}
+.mbar .mt{flex:1;background:var(--bg);border-radius:6px;height:13px;overflow:hidden}
+.mbar .mf{display:block;height:100%;background:var(--green2);border-radius:6px}
+.mbar .mv{width:26px;text-align:right;color:#4a5650}
+.yfacts li{list-style:none;font-size:13px;color:#4a5650;padding:7px 0;border-bottom:1px solid var(--line);line-height:1.6}
+.yfacts li b{color:var(--ink)}
+.y-note{font-size:12px;color:var(--sub);margin-top:14px;background:var(--bg);border-radius:10px;padding:9px 12px}
+
 .view-title{font-size:15px;font-weight:700;margin:26px 0 10px;color:var(--green-deep)}
 .empty{text-align:center;color:var(--sub);font-size:13px;padding:50px 0;background:#fff;border:1px dashed var(--line);border-radius:14px}
 
@@ -96,6 +128,8 @@ a{text-decoration:none;color:inherit}
   .grid{grid-template-columns:repeat(2,1fr)}
   .main{padding:20px 16px}
   .post{flex-wrap:wrap}
+  .y-bottom{grid-template-columns:1fr;gap:18px}
+  .annual{padding:18px 16px}
 }
 </style>
 </head>
@@ -192,6 +226,8 @@ a{text-decoration:none;color:inherit}
       </aside>
     </div>
 
+    <section id="annual" class="annual" style="display:none"></section>
+
     <div id="postArea"></div>
   </main>
 </div>
@@ -276,6 +312,63 @@ document.querySelectorAll("#nav .nav-item[data-view]").forEach(el => el.onclick 
   const time = META.syncTime || "07:23";
   document.getElementById("statusPill").textContent =
     dateShort+" "+time+" 更新 · 本次新增 "+added+" 篇 · 累计 "+total+" 篇";
+})();
+
+// 年度复盘
+(function(){
+  const A = window.ANNUAL_DATA;
+  if(!A) return;
+  const box = document.getElementById("annual");
+  box.style.display = "";
+  const level = v => v===0?"": v<=2?"l1": v<=5?"l2": v<=10?"l3":"l4";
+  // 月份标签：每周一个槽位
+  const labels = A.weeks.map((wk,i) => {
+    const m = wk[0].d.slice(0,7);
+    const prev = i===0 ? null : A.weeks[i-1][0].d.slice(0,7);
+    return (m!==prev) ? `<span style="grid-column:${i+1}">${(+m.slice(5))}月</span>` : `<span style="grid-column:${i+1}"></span>`;
+  }).join("");
+  const cells = A.weeks.map(wk => wk.map(c =>
+    `<div class="hcell ${level(c.v)}" title="${c.d} · ${c.v}篇"></div>`).join("")).join("");
+  const maxV = Math.max.apply(null, A.monthly.map(m=>m.v));
+  const bars = A.monthly.map(m =>
+    `<div class="mbar"><span class="ml">${(+m.k.slice(5))}月</span><span class="mt"><span class="mf" style="width:${Math.round(m.v/maxV*100)}%"></span></span><span class="mv">${m.v}</span></div>`
+  ).join("");
+  const md = A.maxDay.split("-");
+  box.innerHTML = `
+    <div class="y-head">
+      <span class="yk">YEAR IN REVIEW</span>
+      <h2>我的生财年度复盘</h2><span class="yw">${A.window} · 数据窗口近一年</span>
+    </div>
+    <div class="y-stats">
+      <div class="y-stat"><div class="n">${A.total}</div><div class="l">浏览帖子（篇）</div></div>
+      <div class="y-stat"><div class="n">${A.activeDays}</div><div class="l">活跃天数（近30天${A.active30}天）</div></div>
+      <div class="y-stat"><div class="n">${A.voyagesTotal}<small> 期</small></div><div class="l">参加航海（近一年${A.voyagesYear}期）</div></div>
+      <div class="y-stat"><div class="n">${A.tasks}<small> 份</small></div><div class="l">航海作业 · ${A.goods}次好事</div></div>
+      <div class="y-stat"><div class="n">${A.lives}</div><div class="l">深海圈直播（场）</div></div>
+      <div class="y-stat"><div class="n">第${A.memberYears}<small> 年</small></div><div class="l">生财会员</div></div>
+    </div>
+    <div class="heat-scroll"><div class="heat-inner">
+      <div class="heat-months">${labels}</div>
+      <div class="heatmap">${cells}</div>
+      <div class="heat-legend">少
+        <span class="hcell"></span><span class="hcell l1"></span><span class="hcell l2"></span><span class="hcell l3"></span><span class="hcell l4"></span>多
+      </div>
+    </div></div>
+    <div class="y-bottom">
+      <div>
+        <div class="yb-title">每月阅读篇数</div>${bars}
+      </div>
+      <div>
+        <div class="yb-title">年度之最</div>
+        <ul class="yfacts">
+          <li>单日最高：<b>${+md[1]}月${+md[2]}日读了 ${A.maxVal} 篇</b>（当天 CES 游学内容集中更新）</li>
+          <li>最长<b>连续 ${A.bestStreak} 天</b>来生财学习</li>
+          <li>最常在<b>晚上 20:00–23:00</b>来生财（下班后的学习时间）</li>
+          <li>内容偏好：<b>小红书 · AI/Agent · 公众号 · 分销 · 出海</b></li>
+        </ul>
+        <div class="y-note">今年还没参加过线下聚会。上海的局不少，下次看到合适的可以报名试一次，线上读百篇不如线下认识一个同行的人。</div>
+      </div>
+    </div>`;
 })();
 
 render();
