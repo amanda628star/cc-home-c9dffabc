@@ -85,6 +85,8 @@ a{text-decoration:none;color:inherit}
 .pbtn.on-meh{color:#bbb}
 /* 年度复盘 */
 .annual{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-top:20px}
+@keyframes flashGlow{0%{box-shadow:0 0 0 3px rgba(23,122,95,.45)}100%{box-shadow:0 0 0 0 rgba(23,122,95,0)}}
+.flash{animation:flashGlow 1.6s ease-out}
 .y-head{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
 .y-head .yk{font-size:11px;letter-spacing:2px;color:var(--green2);font-weight:600;width:100%}
 .y-head h2{font-size:20px;font-weight:800;color:var(--green-deep)}
@@ -158,6 +160,7 @@ a{text-decoration:none;color:inherit}
       <div class="nav-item" data-view="read"><span class="ic">✓</span>已读<span class="cnt" data-cnt="read"></span></div>
       <div class="nav-item" data-view="fav"><span class="ic">☆</span>收藏<span class="cnt" data-cnt="fav"></span></div>
       <div class="nav-item" data-view="meh"><span class="ic">−</span>已过滤<span class="cnt" data-cnt="meh"></span></div>
+      <div class="nav-item" id="navAnnual"><span class="ic">📊</span>年度复盘</div>
       <a class="nav-item" href="archive.html"><span class="ic">▦</span>档案库</a>
     </nav>
 
@@ -297,10 +300,27 @@ function render(){
   area.innerHTML = html;
 }
 
+function scrollToEl(el){
+  el.scrollIntoView({behavior:"smooth", block:"start"});
+  el.classList.remove("flash");
+  void el.offsetWidth;
+  el.classList.add("flash");
+  setTimeout(()=>el.classList.remove("flash"), 1600);
+}
+
 document.querySelectorAll("#nav .nav-item[data-view]").forEach(el => el.onclick = () => {
   document.querySelectorAll("#nav .nav-item").forEach(x=>x.classList.remove("active"));
   el.classList.add("active"); view = el.dataset.view; render();
+  scrollToEl(document.getElementById("postArea"));
 });
+
+document.getElementById("navAnnual").onclick = () => {
+  document.querySelectorAll("#nav .nav-item").forEach(x=>x.classList.remove("active"));
+  scrollToEl(document.getElementById("annual"));
+};
+
+document.querySelector(".brand").style.cursor = "pointer";
+document.querySelector(".brand").onclick = () => window.scrollTo({top:0, behavior:"smooth"});
 
 // 状态条
 (function(){
