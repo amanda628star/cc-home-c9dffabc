@@ -7,162 +7,276 @@
 <title>邓瑜的生财AI主页</title>
 <style>
 :root{
-  --green:#1c6b46; --green-light:#e8f3ec; --cream:#faf7f1; --ink:#2b2b2b;
-  --sub:#8a857c; --line:#ece7dc; --gold:#b08a3e;
+  --green:#0f5c4d; --green2:#177a5f; --green-deep:#0b4a3e;
+  --green-light:#eef5f1; --ink:#1f2a26; --sub:#8a938e; --line:#e7ece9;
+  --bg:#f6f8f7; --gold:#b08a3e;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:40px}
-.wrap{max-width:720px;margin:0 auto;padding:0 16px}
-header{background:linear-gradient(135deg,#1c6b46,#2d8a5e);color:#fff;padding:28px 20px 22px;border-radius:0 0 22px 22px;margin-bottom:18px}
-header .hi{font-size:13px;opacity:.85;letter-spacing:1px}
-header h1{font-size:21px;margin:4px 0 10px;font-weight:600}
-.chip{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 12px;font-size:12px;margin:0 6px 6px 0}
-.sync{font-size:12px;opacity:.8;margin-top:8px}
-.section-title{font-size:16px;font-weight:600;margin:24px 0 12px;display:flex;align-items:center;gap:8px}
-.section-title::before{content:"";width:4px;height:16px;background:var(--green);border-radius:2px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center}
-.stat .num{font-size:22px;font-weight:700;color:var(--green)}
-.stat .label{font-size:11px;color:var(--sub);margin-top:2px}
-.tabs{display:flex;gap:8px;margin:18px 0 4px;flex-wrap:wrap}
-.tab{padding:6px 14px;border-radius:20px;border:1px solid var(--line);background:#fff;font-size:13px;color:var(--sub);cursor:pointer}
-.tab.active{background:var(--green);color:#fff;border-color:var(--green)}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:12px}
-.card h3{font-size:15px;font-weight:600;line-height:1.45}
-.card h3 a{color:var(--ink);text-decoration:none}
-.card h3 a:active{color:var(--green)}
-.meta{font-size:12px;color:var(--sub);margin:6px 0 8px}
-.tag{display:inline-block;background:var(--green-light);color:var(--green);border-radius:6px;padding:2px 8px;font-size:11px;margin-right:6px}
-.reason{font-size:13px;color:#555;background:var(--cream);border-radius:10px;padding:8px 10px;margin:8px 0}
-.btns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.btn{flex:1;min-width:70px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 0;font-size:12px;color:#666;cursor:pointer}
-.btn.done{background:var(--green-light);color:var(--green);border-color:var(--green-light)}
-.btn.fav{background:#fdf3e3;color:var(--gold);border-color:#f5e4c4}
-.btn.meh{color:#aaa}
-.empty{text-align:center;color:var(--sub);font-size:13px;padding:40px 0}
-footer{text-align:center;font-size:11px;color:var(--sub);margin-top:30px;line-height:1.8}
-.pull{display:block;width:100%;background:#fff;border:1px dashed var(--green);color:var(--green);border-radius:12px;padding:11px;font-size:13px;margin-top:14px;cursor:pointer}
-.badge-read{font-size:11px;color:var(--sub);border:1px solid var(--line);border-radius:6px;padding:1px 7px;margin-left:6px}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+.layout{display:flex;min-height:100vh}
+
+/* ============ 左侧导航 ============ */
+.side{width:260px;background:#fff;border-right:1px solid var(--line);padding:22px 16px;flex-shrink:0;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px 20px;border-bottom:1px solid var(--line)}
+.brand .logo{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.brand .t1{font-size:15px;font-weight:700}
+.brand .t2{font-size:11px;color:var(--sub)}
+.me-card{background:var(--green-light);border-radius:14px;padding:14px;margin:16px 0 8px;text-align:center}
+.me-card .avatar{width:56px;height:56px;border-radius:50%;background:#cfe0d8;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.me-card .name{font-size:14px;font-weight:600}
+.me-card .pos{display:inline-block;background:#fff;color:var(--green);border-radius:14px;font-size:11px;padding:3px 10px;margin-top:6px}
+.nav{margin-top:14px;flex:1}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;color:#44504b;cursor:pointer;margin-bottom:2px}
+.nav-item .ic{width:16px;text-align:center;color:var(--sub)}
+.nav-item .cnt{margin-left:auto;font-size:12px;color:var(--sub)}
+.nav-item.active{background:var(--green-light);color:var(--green);font-weight:600}
+.nav-item.active .ic{color:var(--green)}
+.side-foot{font-size:11px;color:var(--sub);text-align:center;padding-top:12px;border-top:1px solid var(--line);line-height:1.8}
+
+/* ============ 主区域 ============ */
+.main{flex:1;padding:26px 32px;min-width:0}
+.top{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.top .kicker{font-size:11px;letter-spacing:2px;color:var(--green2);font-weight:600}
+.top h1{font-size:28px;font-weight:800;color:var(--green-deep);margin-top:2px}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.status-pill{border:2px solid var(--green);border-radius:10px;padding:9px 16px;font-size:13px;color:#3a4742}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green2);margin-right:7px}
+.btn{border:none;border-radius:10px;padding:10px 18px;font-size:13px;cursor:pointer}
+.btn-line{background:#fff;border:1px solid var(--line);color:#3a4742}
+.btn-green{background:var(--green);color:#fff}
+
+.content{display:flex;gap:20px;margin-top:22px;align-items:flex-start}
+
+/* 定位卡 */
+.pos-card{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;min-width:0}
+.pos-head{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.pos-head .avatar{width:44px;height:44px;border-radius:50%;background:#cfe0d8;display:flex;align-items:center;justify-content:center;font-size:18px}
+.pos-head .pname{font-size:15px;font-weight:700}
+.pos-head .pdesc{font-size:12px;color:var(--sub)}
+.pos-head .adjust{margin-left:auto;color:var(--green2);font-size:13px;cursor:pointer;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:4px}
+.cell{padding:14px 14px 14px 0;border-bottom:1px solid var(--line)}
+.cell .ck{font-size:12px;color:var(--sub)}
+.cell .cv{font-size:14px;font-weight:600;margin-top:3px}
+
+/* 今日聚焦 */
+.focus{width:300px;flex-shrink:0;background:var(--green-deep);color:#fff;border-radius:16px;padding:24px;position:sticky;top:26px}
+.focus .fk{font-size:11px;letter-spacing:2px;opacity:.7}
+.focus h2{font-size:23px;margin:8px 0 12px;font-weight:800}
+.focus p{font-size:13px;opacity:.85;line-height:1.8}
+.ftags{margin-top:16px}
+.ftag{display:inline-block;background:rgba(255,255,255,.14);border-radius:16px;font-size:12px;padding:5px 13px;margin:0 7px 7px 0}
+
+/* 帖子列表 */
+.posts{margin-top:20px}
+.post{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start}
+.post .idx{width:26px;height:26px;border-radius:50%;background:var(--green-light);color:var(--green);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.post .pbody{flex:1;min-width:0}
+.post h3{font-size:15px;font-weight:600;line-height:1.5}
+.post h3 a:hover{color:var(--green2)}
+.post .pmeta{font-size:12px;color:var(--sub);margin:5px 0}
+.post .preason{font-size:13px;color:#5a6660;background:var(--bg);border-radius:9px;padding:8px 11px;margin-top:6px}
+.pbtns{display:flex;gap:7px;flex-shrink:0}
+.pbtn{border:1px solid var(--line);background:#fff;border-radius:9px;font-size:12px;padding:6px 10px;color:#7a857f;cursor:pointer;white-space:nowrap}
+.pbtn.on-read{background:var(--green-light);color:var(--green);border-color:var(--green-light)}
+.pbtn.on-fav{background:#fdf3e3;color:var(--gold);border-color:#f0e0c0}
+.pbtn.on-meh{color:#bbb}
+.view-title{font-size:15px;font-weight:700;margin:26px 0 10px;color:var(--green-deep)}
+.empty{text-align:center;color:var(--sub);font-size:13px;padding:50px 0;background:#fff;border:1px dashed var(--line);border-radius:14px}
+
+@media (max-width:980px){
+  .layout{flex-direction:column}
+  .side{width:100%;flex-direction:column}
+  .nav{display:flex;flex-wrap:wrap;gap:4px}
+  .nav-item{margin:0}
+  .content{flex-direction:column}
+  .focus{width:100%;position:static}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .main{padding:20px 16px}
+  .post{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap" style="padding:0">
-    <div class="hi">邓瑜的生财 AI 主页 · <a href="archive.html" style="color:#fff;opacity:.9">我的档案库 →</a></div>
-    <h1>早，今天也往前走一步</h1>
-    <div>
-      <span class="chip">真人成长博主</span>
-      <span class="chip">小红书 · 虚拟产品</span>
-      <span class="chip">生财分销</span>
-      <span class="chip">AI Agent 实践者</span>
+<div class="layout">
+
+  <!-- 左侧 -->
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">生</div>
+      <div>
+        <div class="t1">生财有术 · AI主页</div>
+        <div class="t2">只看与邓瑜有关的内容</div>
+      </div>
     </div>
-    <div class="sync" id="syncTime"></div>
-  </div>
-</header>
 
-<div class="wrap">
+    <div class="me-card">
+      <div class="avatar">🧹</div>
+      <div class="name">邓瑜</div>
+      <div class="pos">家政转型期 · 搞钱探索期</div>
+    </div>
 
-  <div class="section-title">我的生财年度复盘</div>
-  <div class="stats">
-    <div class="stat"><div class="num">9</div><div class="label">参加航海</div></div>
-    <div class="stat"><div class="num">80+</div><div class="label">作业/打卡</div></div>
-    <div class="stat"><div class="num">9</div><div class="label">作业评好事</div></div>
-    <div class="stat"><div class="num">7</div><div class="label">分销成交(单)</div></div>
-  </div>
+    <nav class="nav" id="nav">
+      <div class="nav-item active" data-view="today"><span class="ic">◉</span>今日精选<span class="cnt" data-cnt="today"></span></div>
+      <div class="nav-item" data-view="unread"><span class="ic">○</span>精选未读<span class="cnt" data-cnt="unread"></span></div>
+      <div class="nav-item" data-view="read"><span class="ic">✓</span>已读<span class="cnt" data-cnt="read"></span></div>
+      <div class="nav-item" data-view="fav"><span class="ic">☆</span>收藏<span class="cnt" data-cnt="fav"></span></div>
+      <div class="nav-item" data-view="meh"><span class="ic">−</span>已过滤<span class="cnt" data-cnt="meh"></span></div>
+      <a class="nav-item" href="archive.html"><span class="ic">▦</span>档案库</a>
+    </nav>
 
-  <div class="section-title">今日精选（5篇）</div>
-  <div class="tabs">
-    <div class="tab active" data-tab="today">精选未读</div>
-    <div class="tab" data-tab="all">全部</div>
-    <div class="tab" data-tab="read">已读</div>
-    <div class="tab" data-tab="fav">收藏</div>
-    <div class="tab" data-tab="meh">不感兴趣</div>
-  </div>
-  <div id="list"></div>
-  <button class="pull" id="pullBtn">今日额外抓取 5 篇（需 AI 运行）</button>
+    <div class="side-foot">
+      生财内容仅供本人学习，严禁外传<br>你我，就是黑马
+    </div>
+  </aside>
 
-  <div class="section-title">当前定位</div>
-  <div class="card" style="font-size:13px;color:#555">
-    住家家政为收入底盘，小红书真人号 + 生财分销为积累线。
-    现阶段关键动作：把一个方向不间断地跑到复利拐点，不再重启。
-    阶段变化或目标调整时，告诉 AI 更新本页画像。
-  </div>
+  <!-- 主区 -->
+  <main class="main">
+    <div class="top">
+      <div>
+        <div class="kicker">PERSONAL READING DESK</div>
+        <h1>我的生财主页</h1>
+      </div>
+      <div class="top-right">
+        <div class="status-pill"><span class="dot"></span><span id="statusPill"></span></div>
+        <button class="btn btn-line" onclick="alert('把这句话发给AI：现在帮我更新主页，抓取最新相关精华帖。')">↻ 更新</button>
+        <button class="btn btn-green" onclick="alert('把这句话发给AI：我要调整主页定位，更新我的人物画像。')">调整主页</button>
+      </div>
+    </div>
 
-  <footer>
-    本页由 AI 按纪钟《如何构建更懂自己的 AI 和生财主页？》方法生成<br>
-    生财有术内容仅供本人学习，严禁外传 · 你我，就是黑马
-  </footer>
+    <div class="content">
+      <!-- 定位卡 -->
+      <section class="pos-card">
+        <div class="pos-head">
+          <div class="avatar">🧹</div>
+          <div>
+            <div class="pname">邓瑜的标准版定位</div>
+            <div class="pdesc">这是你的标准版定位，后续推荐都以此为基准</div>
+          </div>
+          <div class="adjust" onclick="alert('把这句话发给AI：我要调整定位，修改我的画像信息。')">调整定位 ↗</div>
+        </div>
+
+        <div class="grid">
+          <div class="cell"><div class="ck">主定位</div><div class="cv">家政为底盘，真人成长博主</div></div>
+          <div class="cell"><div class="ck">当前阶段</div><div class="cv">失业重启期</div></div>
+          <div class="cell"><div class="ck">当前目标</div><div class="cv">恢复收入，跑通一个变现闭环</div></div>
+
+          <div class="cell"><div class="ck">我有什么技能</div><div class="cv">家政、内容执行、AI工具与Agent实操</div></div>
+          <div class="cell"><div class="ck">我擅长什么</div><div class="cv">有结构时强执行，真实同路人表达</div></div>
+          <div class="cell"><div class="ck">我周围有什么资源</div><div class="cv">生财9期航海圈、小红书号、公众号</div></div>
+
+          <div class="cell"><div class="ck">我有什么经历</div><div class="cv">多年住家；9期航海，80+作业9次好事</div></div>
+          <div class="cell"><div class="ck">长期坚持的爱好</div><div class="cv">学AI、学英语、自我成长</div></div>
+          <div class="cell"><div class="ck">我有什么身份</div><div class="cv">生财会员、分销员、小红书博主</div></div>
+
+          <div class="cell"><div class="ck">别人经常夸我</div><div class="cv">动手强、真实、能坚持（行为推断）</div></div>
+          <div class="cell"><div class="ck">通过什么能力赚钱</div><div class="cv">家政已验证；分销小验证7单</div></div>
+          <div class="cell"><div class="ck">优势与可提供服务</div><div class="cv">真实搞钱陪伴、AI实操分享</div></div>
+
+          <div class="cell"><div class="ck">可投入时间和预算</div><div class="cv">时间整段，预算紧（还债期）</div></div>
+          <div class="cell"><div class="ck">已验证项目结果</div><div class="cv">家政月入1.2万；分销7单</div></div>
+          <div class="cell"><div class="ck">想重点提升的能力</div><div class="cv">获客、持续输出、跑到闭环</div></div>
+        </div>
+      </section>
+
+      <!-- 今日聚焦 -->
+      <aside class="focus">
+        <div class="fk">TODAY'S FOCUS</div>
+        <h2 id="focusTitle">今天先看 5 篇</h2>
+        <p>优先看有真实项目结果、低成本启动路径和获客方法的内容。工具新闻和泛趋势会被放到已过滤。</p>
+        <div class="ftags">
+          <span class="ftag">真实案例</span><span class="ftag">获客</span><span class="ftag">低成本启动</span>
+        </div>
+      </aside>
+    </div>
+
+    <div id="postArea"></div>
+  </main>
 </div>
 
 <script src="data.js"></script>
 <script>
-const FALLBACK_PICKS = [
-  {id:"5122181884285214", title:"小红书越做越没流量？像素级带你高效模仿爆款笔记", author:"梨云", digested:true,
-   tags:["小红书","起号"],
-   reason:"你反复研究这篇（读过3次）。新人起号最快的路径不是原创，是像素级拆解爆款再复刻。"},
-  {id:"82258251252858142", title:"小红书虚拟产品 X 公众号垂直小号，20天累计变现收入上5位数", author:"心海的猫", digested:true,
-   tags:["虚拟产品","公众号","变现"],
-   reason:"你读过全文且点赞。作者在浙江宁波，跑通的正是你关注的小红书+公众号组合打法。"},
-  {id:"45548814885851888", title:"32岁宝妈失业后，靠生财有术做公众号半年变现6位数", author:"糖壹", digested:false,
-   tags:["失业重启","公众号","女性成长"],
-   reason:"你读过、点赞过。失业不是终点是重新选择的起点——和你当下处境直接相关。"},
-  {id:"82255444845254442", title:"从淘宝找产品，到小红书找人群：我的月入5万虚拟资料选品方法", author:"冬青", digested:true,
-   tags:["小红书","选品","虚拟资料"],
-   reason:"你读过这篇。选品的核心是先找人群和真实需求，再回头找产品，可直接用于你的号。"},
-  {id:"55188451551845544", title:"【AI+小绿书】2个月签单5.9w，获客1112人：高客单流量的通用SOP", author:"些些怡", digested:true,
-   tags:["小红书","AI获客","SOP"],
-   reason:"你读过、点赞过。把获客做成可复制SOP，正是你真人号下一步要补的环节。"}
+const FALLBACK = [
+  {id:"5122181884285214",title:"小红书越做越没流量？像素级带你高效模仿爆款笔记",author:"梨云",digested:true,tags:["小红书","起号"],reason:"你反复研究这篇（读过3次）。新人起号最快的路径不是原创，是像素级拆解爆款再复刻。"},
+  {id:"82258251252858142",title:"小红书虚拟产品 X 公众号垂直小号，20天累计变现收入上5位数",author:"心海的猫",digested:true,tags:["虚拟产品","公众号","变现"],reason:"你读过全文且点赞，跑通的正是你关注的小红书+公众号组合打法。"},
+  {id:"45548814885851888",title:"32岁宝妈失业后，靠生财有术做公众号半年变现6位数",author:"糖壹",digested:false,tags:["失业重启","公众号"],reason:"你读过、点赞过。失业重启——和你当下处境直接相关。"},
+  {id:"82255444845254442",title:"从淘宝找产品，到小红书找人群：我的月入5万虚拟资料选品方法",author:"冬青",digested:true,tags:["小红书","选品"],reason:"你读过这篇。先找人群和真实需求，再回头找产品。"},
+  {id:"55188451551845544",title:"【AI+小绿书】2个月签单5.9w，获客1112人：高客单流量的通用SOP",author:"些些怡",digested:true,tags:["小红书","AI获客","SOP"],reason:"你读过、点赞过。把获客做成可复制SOP，正是你下一步要补的环节。"}
 ];
-const PICKS = (window.PICKS_DATA && window.PICKS_DATA.picks) || FALLBACK_PICKS;
+const PICKS = (window.PICKS_DATA && window.PICKS_DATA.picks) || FALLBACK;
+const META = window.PICKS_DATA || {};
 const url = id => "https://scys.com/articleDetail/xq_topic/"+id;
 
-let state = JSON.parse(localStorage.getItem("cc-home-state") || "{}");
-function save(){ localStorage.setItem("cc-home-state", JSON.stringify(state)); }
-function setStatus(id, s){
+let state = JSON.parse(localStorage.getItem("dy-home-state") || "{}");
+function save(){ localStorage.setItem("dy-home-state", JSON.stringify(state)); }
+function setStatus(id,s){
   if(state[id]===s) delete state[id]; else state[id]=s;
   save(); render();
 }
 
-let curTab = "today";
+let view = "today";
+const filters = {
+  today:  p => true,
+  unread: p => !state[p.id],
+  read:   p => state[p.id]==="read",
+  fav:    p => state[p.id]==="fav",
+  meh:    p => state[p.id]==="meh"
+};
+const counts = {};
+function calcCounts(){
+  counts.today = PICKS.filter(p => state[p.id]!=="meh").length;
+  counts.unread = PICKS.filter(p => !state[p.id]).length;
+  counts.read = PICKS.filter(p => state[p.id]==="read").length;
+  counts.fav = PICKS.filter(p => state[p.id]==="fav").length;
+  counts.meh = PICKS.filter(p => state[p.id]==="meh").length;
+  document.querySelectorAll("[data-cnt]").forEach(el => el.textContent = counts[el.dataset.cnt]);
+}
+
+const VIEW_NAMES = {today:"今日精选",unread:"精选未读",read:"已读",fav:"我的收藏",meh:"已过滤"};
+
 function render(){
-  const list = document.getElementById("list");
-  let items = PICKS.slice();
-  const f = {
-    today: p => state[p.id] !== "read" && state[p.id] !== "meh",
-    all: () => true,
-    read: p => state[p.id] === "read",
-    fav: p => state[p.id] === "fav",
-    meh: p => state[p.id] === "meh"
-  }[curTab];
-  items = items.filter(f);
-  if(!items.length){ list.innerHTML = '<div class="empty">这里还空着</div>'; return; }
-  list.innerHTML = items.map(p => {
+  calcCounts();
+  const area = document.getElementById("postArea");
+  const items = PICKS.filter(filters[view]);
+  let html = `<div class="view-title">${VIEW_NAMES[view]}（${items.length}）</div>`;
+  if(!items.length){ html += '<div class="empty">这里还空着</div>'; area.innerHTML = html; return; }
+  html += '<div class="posts">' + items.map((p,i) => {
     const s = state[p.id];
-    return `<div class="card">
-      <h3><a href="${url(p.id)}">${p.title}</a>${s==="read"?'<span class="badge-read">已读</span>':''}</h3>
-      <div class="meta">${p.author}${p.digested?' · 精华':''}</div>
-      <div>${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-      <div class="reason">为什么推给你：${p.reason}</div>
-      <div class="btns">
-        <button class="btn ${s==="read"?"done":""}" onclick="setStatus('${p.id}','read')">${s==="read"?"✓ 已读":"标已读"}</button>
-        <button class="btn ${s==="fav"?"fav":""}" onclick="setStatus('${p.id}','fav')">${s==="fav"?"★ 已收藏":"收藏"}</button>
-        <button class="btn ${s==="meh"?"meh":""}" onclick="setStatus('${p.id}','meh')">不感兴趣</button>
+    return `<div class="post">
+      <div class="idx">${i+1}</div>
+      <div class="pbody">
+        <h3><a href="${url(p.id)}">${p.title}</a></h3>
+        <div class="pmeta">${p.author}${p.digested?" · 精华":""} · ${(p.tags||[]).join(" / ")}</div>
+        <div class="preason">为什么推给你：${p.reason}</div>
+      </div>
+      <div class="pbtns">
+        <button class="pbtn ${s==="read"?"on-read":""}" onclick="setStatus('${p.id}','read')">${s==="read"?"✓ 已读":"已读"}</button>
+        <button class="pbtn ${s==="fav"?"on-fav":""}" onclick="setStatus('${p.id}','fav')">${s==="fav"?"★":"☆"}</button>
+        <button class="pbtn ${s==="meh"?"on-meh":""}" onclick="setStatus('${p.id}','meh')">过滤</button>
       </div>
     </div>`;
-  }).join("");
+  }).join("") + '</div>';
+  area.innerHTML = html;
 }
-document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  t.classList.add("active"); curTab = t.dataset.tab; render();
-});
-document.getElementById("pullBtn").onclick = () => alert("把这句话发给AI：今日额外抓取5篇与我当前阶段相关的生财精华帖，追加到主页。");
 
-const pad = n => String(n).padStart(2,"0");
-const syncInfo = window.PICKS_DATA && window.PICKS_DATA.lastSync;
-const syncDate = syncInfo ? new Date(syncInfo + "T08:30:00+08:00") : new Date();
-document.getElementById("syncTime").textContent =
-  "最近同步：" + syncDate.getFullYear()+"-"+pad(syncDate.getMonth()+1)+"-"+pad(syncDate.getDate()) +
-  " · " + ((window.PICKS_DATA && window.PICKS_DATA.note) || "本次候选50篇，精选5篇");
+document.querySelectorAll("#nav .nav-item[data-view]").forEach(el => el.onclick = () => {
+  document.querySelectorAll("#nav .nav-item").forEach(x=>x.classList.remove("active"));
+  el.classList.add("active"); view = el.dataset.view; render();
+});
+
+// 状态条
+(function(){
+  const ls = META.lastSync || "2026-09-30";
+  const d = ls.split("-");
+  const dateShort = (+d[1])+"/"+(+d[2]);
+  const added = META.added != null ? META.added : PICKS.length;
+  const total = META.total != null ? META.total : PICKS.length;
+  const time = META.syncTime || "07:23";
+  document.getElementById("statusPill").textContent =
+    dateShort+" "+time+" 更新 · 本次新增 "+added+" 篇 · 累计 "+total+" 篇";
+})();
 
 render();
 </script>
