@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>邓瑜的候选池</title>
+<style>
+:root{--green:#1c6b46;--green2:#2d8a5e;--green-light:#e8f3ec;--cream:#faf7f1;--ink:#2b2b2b;--sub:#8a857c;--line:#ece7dc;--gold:#b08a3e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--cream);color:var(--ink);line-height:1.7;padding-bottom:40px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1c6b46,#2d8a5e);color:#fff;padding:26px 20px 20px;border-radius:0 0 22px 22px;margin-bottom:18px}
+header a{color:#fff;font-size:13px;opacity:.85}
+header h1{font-size:21px;margin:6px 0 2px;font-weight:600}
+header .sub{font-size:12px;opacity:.8}
+.tools{display:flex;gap:10px;align-items:center;margin:4px 0 14px;font-size:13px;color:var(--sub)}
+.tools label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.day{margin-bottom:22px}
+.day-head{font-size:15px;font-weight:600;margin:14px 0 4px;display:flex;align-items:center;gap:8px}
+.day-head::before{content:"";width:4px;height:15px;background:var(--green);border-radius:2px}
+.day-note{font-size:12px;color:var(--sub);margin-bottom:8px;padding-left:12px}
+.dir{font-size:12.5px;color:var(--green);font-weight:600;margin:12px 0 6px;padding-left:2px}
+.card{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--green2)}
+.card .t{font-size:14px;font-weight:500;line-height:1.55}
+.card .m{display:flex;gap:8px;align-items:center;margin-top:6px;font-size:12px;color:var(--sub)}
+.badge{display:inline-block;background:var(--green);color:#fff;border-radius:6px;padding:0 8px;font-size:11px;line-height:18px}
+.card.picked{border-color:var(--green2);background:var(--green-light)}
+footer{text-align:center;font-size:11px;color:var(--sub);margin-top:26px;line-height:1.8}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding:0">
+    <a href="index.html">← 返回今日主页</a>
+    <h1>邓瑜的候选池</h1>
+    <div class="sub">每天海选翻到的全部帖子都在这里 · 带⭐标的是当天精选上主页的</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="tools">
+    <label><input type="checkbox" id="hidePicked"> 只看没精选的</label>
+    <span id="cnt"></span>
+  </div>
+  <div id="box"></div>
+  <footer>候选池每日同步追加 · 只存标题作者和链接，不存原文<br>你我，就是黑马</footer>
+</div>
+
+<script src="candidates.js"></script>
+<script>
+(function(){
+  var D = window.CANDIDATES_DATA;
+  var box = document.getElementById("box");
+  var hidePicked = document.getElementById("hidePicked");
+  var cnt = document.getElementById("cnt");
+  if(!D || !D.days || !D.days.length){ box.innerHTML = "<p style='color:var(--sub);font-size:13px'>候选池还是空的。</p>"; return; }
+
+  function render(){
+    box.innerHTML = "";
+    var shown = 0, total = 0;
+    D.days.slice().reverse().forEach(function(day){
+      var visible = day.items.filter(function(it){ return !(hidePicked.checked && it.picked); });
+      total += day.items.length; shown += visible.length;
+      if(!visible.length) return;
+      var dEl = document.createElement("div"); dEl.className = "day";
+      var h = document.createElement("div"); h.className = "day-head"; h.textContent = day.date;
+      dEl.appendChild(h);
+      if(day.note){ var n = document.createElement("div"); n.className = "day-note"; n.textContent = day.note; dEl.appendChild(n); }
+      var lastDir = null;
+      visible.forEach(function(it){
+        if(it.dir !== lastDir){
+          var dirEl = document.createElement("div"); dirEl.className = "dir"; dirEl.textContent = it.dir;
+          dEl.appendChild(dirEl); lastDir = it.dir;
+        }
+        var a = document.createElement("a");
+        a.className = "card" + (it.picked ? " picked" : "");
+        a.href = "https://scys.com/articleDetail/xq_topic/" + it.id;
+        a.target = "_blank"; a.rel = "noopener";
+        var t = document.createElement("div"); t.className = "t";
+        t.textContent = (it.picked ? "⭐ " : "") + it.title;
+        var m = document.createElement("div"); m.className = "m";
+        var au = document.createElement("span"); au.textContent = it.author;
+        m.appendChild(au);
+        if(it.picked){ var b = document.createElement("span"); b.className = "badge"; b.textContent = "已精选"; m.appendChild(b); }
+        a.appendChild(t); a.appendChild(m);
+        dEl.appendChild(a);
+      });
+      box.appendChild(dEl);
+    });
+    cnt.textContent = "显示 " + shown + " / 共 " + total + " 篇";
+  }
+  hidePicked.onchange = render;
+  render();
+})();
+</script>
+</body>
+</html>
