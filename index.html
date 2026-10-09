@@ -247,6 +247,7 @@ const FALLBACK = [
 ];
 const PICKS = (window.PICKS_DATA && window.PICKS_DATA.picks) || FALLBACK;
 const META = window.PICKS_DATA || {};
+document.getElementById("focusTitle").textContent = "今天先看 " + PICKS.length + " 篇";
 const url = id => "https://scys.com/articleDetail/xq_topic/"+id;
 
 let state = JSON.parse(localStorage.getItem("dy-home-state") || "{}");
