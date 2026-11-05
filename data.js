@@ -1,7 +1,7 @@
 // 邓瑜生财AI主页 · 数据文件（由AI每日同步更新，不要手动改格式）
 window.PICKS_DATA = {
-  "lastSync": "2026-11-05",
-  "syncTime": "07:27",
+  "lastSync": "2026-11-06",
+  "syncTime": "07:28",
   "added": 0,
   "total": 94,
   "note": "候选50篇，精选0篇",
